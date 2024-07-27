@@ -2,7 +2,10 @@
   <div class="z-0">
     <div class="flex justify-between text-[12px]">
       <div>
-        <font-awesome-icon class="absolute my-4 mx-6 text-[#858585]" icon="fa-solid fa-search" />
+        <font-awesome-icon
+          class="absolute my-4 mx-6 text-[#858585]"
+          icon="fa-solid fa-search"
+        />
         <input
           type="text"
           class="py-3 pl-14 w-96 outline-none rounded"
@@ -15,7 +18,10 @@
           @click="toggleDropdwon"
         >
           <span class="mr-3">{{ currentRegion }}</span>
-          <font-awesome-icon class="text-[#858585]" icon="fa-solid fa-angle-down" />
+          <font-awesome-icon
+            class="text-[#858585]"
+            icon="fa-solid fa-angle-down"
+          />
         </button>
         <ul v-show="dropdown" class="bg-white mt-1 z-10">
           <li
@@ -32,18 +38,18 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 
-const dropdown = ref(false);
-const regions = ["Africa", "America", "Asia", "Europe", "Oceania"];
-const currentRegion = ref("Filter by Region");
+const dropdown = ref<boolean>(false);
+const regions: string[] = ["Africa", "America", "Asia", "Europe", "Oceania"];
+const currentRegion = ref<string>("Filter by Region");
 
 const toggleDropdwon = () => {
   dropdown.value = !dropdown.value;
 };
 
-const changeRegion = region => {
+const changeRegion = (region: string) => {
   currentRegion.value = region;
   dropdown.value = false;
 };

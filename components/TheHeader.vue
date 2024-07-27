@@ -1,5 +1,7 @@
 <template>
-  <div class="flex justify-between bg-white py-5 px-20 border-b-2 border-[#fafafa]">
+  <div
+    class="flex justify-between bg-white py-5 px-20 border-b-2 border-[#fafafa]"
+  >
     <h2 class="font-nunitoExtraBold">Where in the world?</h2>
     <div>
       <button @click="toggleTheme()">
@@ -10,11 +12,11 @@
   </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { ref, computed } from "vue";
 import { ThemeConstants } from "../constants/index";
 
-const currentTheme = ref("Dark");
+const currentTheme = ref<string>("Dark");
 
 // console.log(localStorage.getItem(ThemeConstants.LOCAL_STORAGE_THEME_KEY));
 
