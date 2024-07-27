@@ -1,0 +1,42 @@
+<template>
+  <div class="flex justify-between bg-white py-5 px-20 border-b-2 border-[#fafafa]">
+    <h2 class="font-nunitoExtraBold">Where in the world?</h2>
+    <div>
+      <button @click="toggleTheme()">
+        <font-awesome-icon class="mr-2" :icon="iconName" />
+        {{ currentTheme }} Mode
+      </button>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref, computed } from "vue";
+import { ThemeConstants } from "../constants/index";
+
+const currentTheme = ref("Dark");
+
+// console.log(localStorage.getItem(ThemeConstants.LOCAL_STORAGE_THEME_KEY));
+
+const isDarkTheme = computed(() => currentTheme.value === "Dark");
+
+const iconName = computed(
+  () =>
+    `fa-regular ${
+      isDarkTheme.value
+        ? `fa-${ThemeConstants.SUN_ICON}`
+        : `fa-${ThemeConstants.MOON_ICON}`
+    }`
+);
+
+const toggleTheme = () => {
+  console.log(1);
+  const bodyClassList = document.body.classList;
+  const isDark = bodyClassList.toggle(ThemeConstants.DARK_THEME_CLASS);
+  currentTheme.value = isDark ? "Dark" : "Light";
+  localStorage.setItem(
+    ThemeConstants.LOCAL_STORAGE_THEME_KEY,
+    currentTheme.value
+  );
+};
+</script>
