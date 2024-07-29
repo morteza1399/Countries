@@ -32,9 +32,10 @@ const iconName = computed(
 );
 
 const toggleTheme = () => {
-  console.log(1);
-  const bodyClassList = document.body.classList;
-  const isDark = bodyClassList.toggle(ThemeConstants.DARK_THEME_CLASS);
+  const parentClassList =
+    document.body.firstElementChild?.firstElementChild?.classList;
+
+  const isDark = parentClassList?.toggle(ThemeConstants.DARK_THEME_CLASS);
   currentTheme.value = isDark ? "Dark" : "Light";
   localStorage.setItem(
     ThemeConstants.LOCAL_STORAGE_THEME_KEY,
