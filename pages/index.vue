@@ -35,6 +35,17 @@
         </ul>
       </div>
     </div>
+    <div class="flex flex-wrap">
+      <div v-for="(item, index) in data" :key="index">
+        <div>
+          <img :src="item.flags.png" alt="" />
+          <h2>{{ item.name }}</h2>
+          <p><b>Population:</b> {{ item.population }}</p>
+          <p><b>Region:</b> {{ item.region }}</p>
+          <p><b>Capital:</b> {{ item.capital }}</p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -44,6 +55,13 @@ import { ref } from "vue";
 const dropdown = ref<boolean>(false);
 const regions: string[] = ["Africa", "America", "Asia", "Europe", "Oceania"];
 const currentRegion = ref<string>("Filter by Region");
+
+const api = useApi();
+
+const { data } = await api({
+  method: "GET",
+  url: "/country",
+});
 
 const toggleDropdwon = () => {
   dropdown.value = !dropdown.value;

@@ -18,8 +18,6 @@ import { ThemeConstants } from "../constants/index";
 
 const currentTheme = ref<string>("Dark");
 
-// console.log(localStorage.getItem(ThemeConstants.LOCAL_STORAGE_THEME_KEY));
-
 const isDarkTheme = computed(() => currentTheme.value === "Dark");
 
 const iconName = computed(
