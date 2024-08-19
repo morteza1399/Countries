@@ -2,10 +2,7 @@
   <div class="z-0">
     <div class="flex justify-between text-[12px]">
       <div>
-        <font-awesome-icon
-          class="absolute my-4 mx-6 text-[#858585]"
-          icon="fa-solid fa-search"
-        />
+        <font-awesome-icon class="absolute my-4 mx-6 text-[#858585]" icon="fa-solid fa-search" />
         <input
           type="text"
           class="py-3 pl-14 w-96 outline-none rounded"
@@ -18,10 +15,7 @@
           @click="toggleDropdwon"
         >
           <span class="mr-3">{{ currentRegion }}</span>
-          <font-awesome-icon
-            class="text-[#858585]"
-            icon="fa-solid fa-angle-down"
-          />
+          <font-awesome-icon class="text-[#858585]" icon="fa-solid fa-angle-down" />
         </button>
         <ul v-show="dropdown" class="bg-white mt-1 z-10">
           <li
@@ -35,16 +29,30 @@
         </ul>
       </div>
     </div>
-    <div class="flex flex-wrap">
-      <div v-for="(item, index) in data" :key="index">
-        <div>
-          <img :src="item.flags.png" alt="" />
-          <h2>{{ item.name }}</h2>
-          <p><b>Population:</b> {{ item.population }}</p>
-          <p><b>Region:</b> {{ item.region }}</p>
-          <p><b>Capital:</b> {{ item.capital }}</p>
+    <div class="flex flex-wrap justify-between my-8">
+      <a
+        href="#"
+        class="bg-white w-[240px] my-4 rounded"
+        v-for="(item, index) in data"
+        :key="index"
+      >
+        <img class="aspect-video rounded-t" :src="item.flags.png" alt="flag" />
+        <div class="p-3">
+          <h2 class="font-nunitoExtraBold my-2">{{ item.name }}</h2>
+          <p class="text-xs">
+            <b>Population:</b>
+            {{ item.population }}
+          </p>
+          <p class="text-xs">
+            <b>Region:</b>
+            {{ item.region }}
+          </p>
+          <p class="text-xs">
+            <b>Capital:</b>
+            {{ item.capital }}
+          </p>
         </div>
-      </div>
+      </a>
     </div>
   </div>
 </template>
@@ -60,7 +68,7 @@ const api = useApi();
 
 const { data } = await api({
   method: "GET",
-  url: "/country",
+  url: "/country"
 });
 
 const toggleDropdwon = () => {
