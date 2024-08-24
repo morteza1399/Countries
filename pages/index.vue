@@ -2,7 +2,10 @@
   <div class="z-0">
     <div class="flex justify-between text-[12px]">
       <div>
-        <font-awesome-icon class="absolute my-4 mx-6 text-[#858585]" icon="fa-solid fa-search" />
+        <font-awesome-icon
+          class="absolute my-4 mx-6 text-[#858585]"
+          icon="fa-solid fa-search"
+        />
         <input
           type="text"
           class="py-3 pl-14 w-96 outline-none rounded"
@@ -15,9 +18,13 @@
           @click="toggleDropdwon"
         >
           <span class="mr-3">{{ currentRegion }}</span>
-          <font-awesome-icon class="text-[#858585]" icon="fa-solid fa-angle-down" />
+          <font-awesome-icon
+            class="text-[#858585]"
+            icon="fa-solid fa-angle-down"
+          />
         </button>
-        <ul v-show="dropdown" class="bg-white mt-1 z-10">
+        <ul v-show="dropdown" class="bg-white mt-1">
+          <!-- z-10 -->
           <li
             class="cursor-pointer px-3 py-2"
             v-for="(region, index) in regions"
@@ -29,26 +36,28 @@
         </ul>
       </div>
     </div>
-    <div class="flex flex-wrap justify-between my-8">
+    <div class="flex flex-wrap gap-[6.75rem] my-8">
       <a
         href="#"
-        class="bg-white w-[240px] my-4 rounded"
-        v-for="(item, index) in data"
+        class="bg-white rounded"
+        v-for="(item, index) in filteredByRegion"
         :key="index"
       >
-        <img class="aspect-video rounded-t" :src="item.flags.png" alt="flag" />
+        <img class="h-40 w-64 rounded-t" :src="item.flags.png" alt="flag" />
         <div class="p-3">
-          <h2 class="font-nunitoExtraBold my-2">{{ item.name }}</h2>
+          <h2 class="font-nunitoExtraBold w-min my-2">
+            {{ item.name }}
+          </h2>
           <p class="text-xs">
-            <b>Population:</b>
+            <b class="font-nunitoExtraBold">Population:</b>
             {{ item.population }}
           </p>
           <p class="text-xs">
-            <b>Region:</b>
+            <b class="font-nunitoExtraBold">Region:</b>
             {{ item.region }}
           </p>
           <p class="text-xs">
-            <b>Capital:</b>
+            <b class="font-nunitoExtraBold">Capital:</b>
             {{ item.capital }}
           </p>
         </div>
@@ -58,17 +67,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 
 const dropdown = ref<boolean>(false);
-const regions: string[] = ["Africa", "America", "Asia", "Europe", "Oceania"];
+const regions: string[] = ["Africa", "Americas", "Asia", "Europe", "Oceania"];
 const currentRegion = ref<string>("Filter by Region");
+const filteredByRegion = ref<any>([]);
 
 const api = useApi();
 
 const { data } = await api({
   method: "GET",
-  url: "/country"
+  url: "/country",
 });
 
 const toggleDropdwon = () => {
@@ -78,5 +88,17 @@ const toggleDropdwon = () => {
 const changeRegion = (region: string) => {
   currentRegion.value = region;
   dropdown.value = false;
+
+  let filteredData = data.filter(
+    (item: any) => item.region === currentRegion.value
+  );
+
+  filteredByRegion.value = regions.includes(currentRegion.value)
+    ? filteredData
+    : data;
 };
+
+onMounted(() => {
+  filteredByRegion.value = data;
+});
 </script>
