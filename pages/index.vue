@@ -69,7 +69,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, computed, onMounted } from "vue";
 
 const dropdown = ref<boolean>(false);
 const regions: string[] = ["Africa", "Americas", "Asia", "Europe", "Oceania"];
@@ -84,6 +84,10 @@ const { data } = await api({
   url: "/country",
 });
 
+const filteredData = computed(() => {
+  return data.filter((item: any) => item.region === currentRegion.value);
+});
+
 const toggleDropdwon = () => {
   dropdown.value = !dropdown.value;
 };
@@ -91,12 +95,8 @@ const toggleDropdwon = () => {
 const changeRegion = (region: string) => {
   currentRegion.value = region;
 
-  let filteredData = data.filter(
-    (item: any) => item.region === currentRegion.value
-  );
-
   filteredByRegion.value = regions.includes(currentRegion.value)
-    ? filteredData
+    ? filteredData.value
     : data;
   dropdown.value = false;
 };
@@ -108,9 +108,13 @@ const searchCountry = () => {
     (item: any) => item.name.toLowerCase() === normalizedCountryName
   );
 
-  filteredByRegion.value = !foundCountry
-    ? filteredByRegion.value
-    : [foundCountry];
+  if (!foundCountry) {
+    filteredByRegion.value = regions.includes(currentRegion.value)
+      ? filteredData.value
+      : data;
+  } else {
+    filteredByRegion.value = [foundCountry];
+  }
 };
 
 onMounted(() => {
