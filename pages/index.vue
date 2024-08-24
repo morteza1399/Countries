@@ -10,6 +10,8 @@
           type="text"
           class="py-3 pl-14 w-96 outline-none rounded"
           placeholder="Search for a country..."
+          v-model="country"
+          @input="searchCountry"
         />
       </div>
       <div>
@@ -73,6 +75,7 @@ const dropdown = ref<boolean>(false);
 const regions: string[] = ["Africa", "Americas", "Asia", "Europe", "Oceania"];
 const currentRegion = ref<string>("Filter by Region");
 const filteredByRegion = ref<any>([]);
+const country = ref<string>("");
 
 const api = useApi();
 
@@ -87,7 +90,6 @@ const toggleDropdwon = () => {
 
 const changeRegion = (region: string) => {
   currentRegion.value = region;
-  dropdown.value = false;
 
   let filteredData = data.filter(
     (item: any) => item.region === currentRegion.value
@@ -96,6 +98,19 @@ const changeRegion = (region: string) => {
   filteredByRegion.value = regions.includes(currentRegion.value)
     ? filteredData
     : data;
+  dropdown.value = false;
+};
+
+const searchCountry = () => {
+  const normalizedCountryName: string = country.value.toLowerCase();
+
+  let foundCountry = filteredByRegion.value.find(
+    (item: any) => item.name.toLowerCase() === normalizedCountryName
+  );
+
+  filteredByRegion.value = !foundCountry
+    ? filteredByRegion.value
+    : [foundCountry];
 };
 
 onMounted(() => {
