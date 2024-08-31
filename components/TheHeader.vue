@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex justify-between bg-white py-5 px-20 border-b-2 border-[#fafafa]"
+    class="flex justify-between bg-white py-5 sm:px-20 px-2 border-b-2 border-[#fafafa]"
   >
     <h2 class="font-nunitoExtraBold">Where in the world?</h2>
     <div>
