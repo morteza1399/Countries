@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="flex justify-between bg-white py-5 sm:px-20 px-2 border-b-2 border-[#fafafa]"
-  >
+  <div class="flex justify-between bg-white py-5 sm:px-20 px-2 border-b-2 border-[#fafafa]">
     <h2 class="font-nunitoExtraBold">Where in the world?</h2>
     <div>
       <button @click="toggleTheme()">
@@ -24,8 +22,8 @@ const iconName = computed(
   () =>
     `fa-regular ${
       isDarkTheme.value
-        ? `fa-${ThemeConstants.SUN_ICON}`
-        : `fa-${ThemeConstants.MOON_ICON}`
+        ? `fa-${ThemeConstants.MOON_ICON}`
+        : `fa-${ThemeConstants.SUN_ICON}`
     }`
 );
 

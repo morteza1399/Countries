@@ -1,31 +1,25 @@
 <template>
   <div>
     <div class="flex sm:flex-row flex-col justify-between text-[12px]">
-      <div>
-        <font-awesome-icon
-          class="absolute my-4 mx-6 text-[#858585]"
-          icon="fa-solid fa-search"
-        />
+      <div class="m-auto sm:m-0">
+        <font-awesome-icon class="absolute my-4 mx-6 text-[#858585]" icon="fa-solid fa-search" />
         <input
           type="text"
-          class="py-3 pl-14 sm:w-96 w-full outline-none rounded"
+          class="py-3 pl-14 sm:w-96 w-[90vw] outline-none rounded"
           placeholder="Search for a country..."
           v-model="country"
           @input="searchCountry"
         />
       </div>
-      <div>
+      <div class="mx-4 mt-7 mb-0 sm:m-0">
         <button
           class="flex justify-between items-center bg-white p-3 w-40 rounded"
           @click="toggleDropdwon"
         >
           <span class="mr-3">{{ currentRegion }}</span>
-          <font-awesome-icon
-            class="text-[#858585]"
-            icon="fa-solid fa-angle-down"
-          />
+          <font-awesome-icon class="text-[#858585]" icon="fa-solid fa-angle-down" />
         </button>
-        <ul v-show="dropdown" class="bg-white mt-1">
+        <ul v-show="dropdown" class="absolute w-40 bg-white mt-1">
           <li
             class="cursor-pointer px-3 py-2"
             v-for="(region, index) in regions"
@@ -37,22 +31,19 @@
         </ul>
       </div>
     </div>
-    <div class="flex flex-wrap sm:gap-[6.75rem] my-8">
+    <div class="flex flex-wrap sm:gap-[3.45rem] my-8">
+      <!-- sm:gap-[6.75rem] -->
       <a
         href="#"
-        class="bg-white rounded my-4 mx-auto sm:m-0"
+        class="bg-white rounded my-3 mx-auto sm:m-0"
         v-for="(item, index) in filteredByRegion"
         :key="index"
       >
         <img class="h-40 w-64 rounded-t" :src="item.flags.png" alt="flag" />
-        <div
-          class="flex flex-col justify-start justify-items-start w-64 h-40 p-2"
-        >
+        <div class="flex flex-col justify-start justify-items-start w-64 h-40 p-2">
           <h2
             class="overflow-hidden text-clip whitespace-nowrap font-nunitoExtraBold my-2"
-          >
-            {{ item.name }}
-          </h2>
+          >{{ item.name }}</h2>
           <p class="text-xs">
             <b class="font-nunitoExtraBold">Population:</b>
             {{ item.population }}
@@ -84,7 +75,7 @@ const api = useApi();
 
 const { data } = await api({
   method: "GET",
-  url: "/country",
+  url: "/country"
 });
 
 const filteredData = computed(() => {
