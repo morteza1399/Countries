@@ -40,22 +40,7 @@
     <div class="flex flex-wrap sm:gap-[6.75rem] my-8">
       <!--  sm:gap-[3.45rem] -->
       <NuxtLink
-        :to="{
-          path: `/countries/${item.name.split(' ').join('-')}`,
-          query: {
-            flag: item.flag,
-            name: item.name,
-            nativeName: item.nativeName,
-            population: item.population,
-            region: item.region,
-            subregion: item.subregion,
-            capital: item.capital,
-            topLevelDomain: item.topLevelDomain,
-            currencies: JSON.stringify(item.currencies),
-            languages: JSON.stringify(item.languages),
-            borders: item.borders,
-          },
-        }"
+        :to="generateLink(item)"
         class="bg-white rounded my-3 mx-auto sm:m-0"
         v-for="(item, index) in filteredByRegion"
         :key="index"
@@ -88,8 +73,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
-
 const dropdown = ref<boolean>(false);
 const regions: string[] = ["Africa", "Americas", "Asia", "Europe", "Oceania"];
 const currentRegion = ref<string>("Filter by Region");
@@ -134,6 +117,39 @@ const searchCountry = () => {
   } else {
     filteredByRegion.value = [foundCountry];
   }
+};
+
+const generateLink = (item: any) => {
+  const {
+    name,
+    flag,
+    nativeName,
+    population,
+    region,
+    subregion,
+    capital,
+    topLevelDomain,
+    currencies,
+    languages,
+    borders,
+  } = item;
+
+  return {
+    path: `/countries/${encodeURIComponent(name.split(" ").join("-"))}`,
+    query: {
+      flag,
+      name,
+      nativeName,
+      population,
+      region,
+      subregion,
+      capital,
+      topLevelDomain,
+      currencies: JSON.stringify(currencies),
+      languages: JSON.stringify(languages),
+      borders,
+    },
+  };
 };
 
 onMounted(() => {
