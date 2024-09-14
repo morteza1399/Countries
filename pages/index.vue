@@ -42,7 +42,19 @@
       <NuxtLink
         :to="{
           path: `/countries/${item.name.split(' ').join('-')}`,
-          query: item,
+          query: {
+            flag: item.flag,
+            name: item.name,
+            nativeName: item.nativeName,
+            population: item.population,
+            region: item.region,
+            subregion: item.subregion,
+            capital: item.capital,
+            topLevelDomain: item.topLevelDomain,
+            currencies: JSON.stringify(item.currencies),
+            languages: JSON.stringify(item.languages),
+            borders: item.borders,
+          },
         }"
         class="bg-white rounded my-3 mx-auto sm:m-0"
         v-for="(item, index) in filteredByRegion"

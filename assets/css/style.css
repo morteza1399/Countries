@@ -5,19 +5,20 @@
 @layer base {
   @font-face {
     font-family: "Nunito_Sans_Light";
-    src: url('../fonts/Nunito_Sans/static/NunitoSans_10pt-Light.ttf');
+    src: url("../fonts/Nunito_Sans/static/NunitoSans_10pt-Light.ttf");
     font-weight: 300;
   }
 
   @font-face {
     font-family: "Nunito_Sans_Medium";
-    src: url('../fonts/Nunito_Sans/static/NunitoSans_10pt-Medium.ttf');
+    src: url("../fonts/Nunito_Sans/static/NunitoSans_10pt-Medium.ttf");
     font-weight: 500;
   }
 
   @font-face {
     font-family: "Nunito_Sans_ExtraBold";
-    src: url('../fonts/Nunito_Sans/static/NunitoSans_7pt-ExtraBold.ttf');
+    src: url("../fonts/Nunito_Sans/static/NunitoSans_7pt-ExtraBold.ttf");
     font-weight: 800;
   }
 }
+
