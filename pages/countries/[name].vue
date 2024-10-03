@@ -57,13 +57,16 @@
             <b class="font-nunitoMedium">Capital: </b>{{ countryInfo.capital }}
           </p>
         </div>
-        <div v-show="borders.length !== 0" class="flex justify-between mt-12">
+        <div
+          v-show="borderCountries.length !== 0"
+          class="flex justify-between mt-12"
+        >
           <p class="w-full [&>*:nth-child(2)]:ml-3">
             <b class="font-nunitoMedium">Border Countries: </b>
             <NuxtLink
               :to="useGenerateLink(item)"
               class="bg-white font-bold py-2 px-4 ml-0 my-3 mr-3 rounded"
-              v-for="(item, index) in borders"
+              v-for="(item, index) in borderCountries"
               :key="index"
             >
               {{ item.name }}
@@ -102,14 +105,24 @@ const languages = computed<string>(() => {
   return parsedLanguages.join();
 });
 
-const borders = computed(() => {
-  let parsedBorders = data.filter((item: any) =>
+const abbrLongCountryNames = computed(() => {
+  return data.map((item: any) => {
+    return item.name.includes("(")
+      ? { ...item, name: item.name.split(" ")[0] }
+      : { ...item, name: item.name };
+  });
+});
+
+const borderCountries = computed(() => {
+  return abbrLongCountryNames.value.filter((item: any) =>
     countryInfo.borders?.includes(item.alpha3Code)
   );
-  // parsedBorders = parsedBorders.map((item: any) =>
-  //   item.name.includes("(") ? item.name.split(" ")[0] : item.name
-  // );
-
-  return parsedBorders;
 });
+
+// const goBack = () => {
+//   const { history } = useRouter().options;
+//   return {
+//     path: history.state.back as string,
+//   };
+// };
 </script>
