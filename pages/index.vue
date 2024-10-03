@@ -38,7 +38,6 @@
       </div>
     </div>
     <div class="flex flex-wrap sm:gap-[6.75rem] my-8">
-      <!--  sm:gap-[3.45rem] -->
       <NuxtLink
         :to="generateLink(item)"
         class="bg-white rounded my-3 mx-auto sm:m-0"
@@ -49,21 +48,21 @@
         <div
           class="flex flex-col justify-start justify-items-start w-64 h-40 p-2"
         >
-          <h2
+          <h3
             class="overflow-hidden text-clip whitespace-nowrap font-nunitoExtraBold my-2"
           >
             {{ item.name }}
-          </h2>
-          <p class="text-xs">
-            <b class="font-nunitoExtraBold">Population:</b>
+          </h3>
+          <p class="text-xs my-1">
+            <b class="font-nunitoMedium">Population:</b>
             {{ item.population }}
           </p>
-          <p class="text-xs">
-            <b class="font-nunitoExtraBold">Region:</b>
+          <p class="text-xs my-1">
+            <b class="font-nunitoMedium">Region:</b>
             {{ item.region }}
           </p>
-          <p class="text-xs">
-            <b class="font-nunitoExtraBold">Capital:</b>
+          <p class="text-xs my-1">
+            <b class="font-nunitoMedium">Capital:</b>
             {{ item.capital }}
           </p>
         </div>
@@ -88,6 +87,10 @@ const { data } = await api({
 
 const filteredData = computed(() => {
   return data.filter((item: any) => item.region === currentRegion.value);
+});
+
+const borders = computed(() => {
+  return data.filter((item: any) => item.alpha3Code.includes(item.borders));
 });
 
 const toggleDropdwon = () => {

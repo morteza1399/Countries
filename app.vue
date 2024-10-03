@@ -1,5 +1,5 @@
 <template>
-  <div class="font-nunitoLight text-[14px] text-[#111517] dark">
+  <div class="font-nunitoLight text-[#111517] dark">
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
