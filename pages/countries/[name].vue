@@ -85,12 +85,7 @@
 const route = useRoute();
 const countryInfo = route.query;
 
-const api = useApi();
-
-const { data } = await api({
-  method: "GET",
-  url: "/country",
-});
+const data = await useCountryApi();
 
 const topLevelDomain = computed(() => {
   return countryInfo.topLevelDomain?.toString();
@@ -108,13 +103,12 @@ const languages = computed<string>(() => {
   return parsedLanguages.join();
 });
 
-const abbrLongCountryNames = computed(() => {
-  return data.map((item: any) => {
-    return item.name.includes("(")
-      ? { ...item, name: item.name.split(" ")[0] }
-      : { ...item, name: item.name };
-  });
-});
+const abbrLongCountryNames = computed(() =>
+  data.map(({ name, ...rest }: any) => ({
+    ...rest,
+    name: name.includes("(") ? name.split(" ")[0] : name,
+  }))
+);
 
 const borderCountries = computed(() => {
   return abbrLongCountryNames.value.filter((item: any) =>

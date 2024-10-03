@@ -78,12 +78,7 @@ const currentRegion = ref<string>("Filter by Region");
 const filteredByRegion = ref<any>([]);
 const country = ref<string>("");
 
-const api = useApi();
-
-const { data } = await api({
-  method: "GET",
-  url: "/country",
-});
+const data = await useCountryApi();
 
 const filteredData = computed(() => {
   return data.filter((item: any) => item.region === currentRegion.value);
