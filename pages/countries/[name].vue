@@ -2,8 +2,8 @@
   <div>
     <div class="flex my-10">
       <NuxtLink
-        to="/"
-        class="bg-white text-black font-bold py-2 px-8 rounded hover:bg-gray-100 transition-all"
+        @click="$router.back()"
+        class="bg-white text-black font-bold py-2 px-8 rounded cursor-pointer hover:bg-gray-100 transition-all"
       >
         <font-awesome-icon
           class="text-[#858585] mx-1"
@@ -121,11 +121,4 @@ const borderCountries = computed(() => {
     countryInfo.borders?.includes(item.alpha3Code)
   );
 });
-
-// const goBack = () => {
-//   const { history } = useRouter().options;
-//   return {
-//     path: history.state.back as string,
-//   };
-// };
 </script>
