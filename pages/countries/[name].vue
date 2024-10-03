@@ -1,7 +1,10 @@
 <template>
   <div>
     <div class="flex my-10">
-      <NuxtLink to="/" class="bg-white text-black font-bold py-2 px-8 rounded">
+      <NuxtLink
+        to="/"
+        class="bg-white text-black font-bold py-2 px-8 rounded hover:bg-gray-100 transition-all"
+      >
         <font-awesome-icon
           class="text-[#858585] mx-1"
           icon="fa-solid fa-arrow-left"
@@ -65,7 +68,7 @@
             <b class="font-nunitoMedium">Border Countries: </b>
             <NuxtLink
               :to="useGenerateLink(item)"
-              class="bg-white font-bold py-2 px-4 ml-0 my-3 mr-3 rounded"
+              class="inline-flex bg-white font-bold py-2 px-4 ml-0 my-3 mr-3 rounded hover:bg-gray-100 transition-all"
               v-for="(item, index) in borderCountries"
               :key="index"
             >
