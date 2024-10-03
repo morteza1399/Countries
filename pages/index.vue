@@ -39,7 +39,7 @@
     </div>
     <div class="flex flex-wrap sm:gap-[6.75rem] my-8">
       <NuxtLink
-        :to="generateLink(item)"
+        :to="useGenerateLink(item)"
         class="bg-white rounded my-3 mx-auto sm:m-0"
         v-for="(item, index) in filteredByRegion"
         :key="index"
@@ -89,10 +89,6 @@ const filteredData = computed(() => {
   return data.filter((item: any) => item.region === currentRegion.value);
 });
 
-const borders = computed(() => {
-  return data.filter((item: any) => item.alpha3Code.includes(item.borders));
-});
-
 const toggleDropdwon = () => {
   dropdown.value = !dropdown.value;
 };
@@ -120,39 +116,6 @@ const searchCountry = () => {
   } else {
     filteredByRegion.value = [foundCountry];
   }
-};
-
-const generateLink = (item: any) => {
-  const {
-    name,
-    flag,
-    nativeName,
-    population,
-    region,
-    subregion,
-    capital,
-    topLevelDomain,
-    currencies,
-    languages,
-    borders,
-  } = item;
-
-  return {
-    path: `/countries/${encodeURIComponent(name.split(" ").join("-"))}`,
-    query: {
-      flag,
-      name,
-      nativeName,
-      population,
-      region,
-      subregion,
-      capital,
-      topLevelDomain,
-      currencies: JSON.stringify(currencies),
-      languages: JSON.stringify(languages),
-      borders,
-    },
-  };
 };
 
 onMounted(() => {

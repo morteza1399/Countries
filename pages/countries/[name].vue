@@ -13,15 +13,16 @@
       <div class="flex w-full">
         <img
           class="w-full h-full"
-          :src="`${data.flag}`"
-          :alt="`${data.name}`"
+          :src="`${countryInfo.flag}`"
+          :alt="`${countryInfo.name}`"
         />
       </div>
       <div class="flex flex-col w-full p-6">
-        <h2 class="font-nunitoExtraBold my-6">{{ data.name }}</h2>
+        <h2 class="font-nunitoExtraBold my-6">{{ countryInfo.name }}</h2>
         <div class="flex justify-between my-1">
           <p class="w-full">
-            <b class="font-nunitoMedium">Native Name: </b>{{ data.nativeName }}
+            <b class="font-nunitoMedium">Native Name: </b
+            >{{ countryInfo.nativeName }}
           </p>
           <p class="w-full">
             <b class="font-nunitoMedium">Top Level Domain: </b
@@ -31,7 +32,7 @@
         <div class="flex justify-between my-1">
           <p class="w-full">
             <b class="font-nunitoMedium">Population: </b
-            >{{ data.population }}
+            >{{ countryInfo.population }}
           </p>
           <p class="w-full">
             <b class="font-nunitoMedium">Currencies: </b>{{ currencies }}
@@ -39,7 +40,7 @@
         </div>
         <div class="flex justify-between my-1">
           <p class="w-full">
-            <b class="font-nunitoMedium">Region: </b>{{ data.region }}
+            <b class="font-nunitoMedium">Region: </b>{{ countryInfo.region }}
           </p>
           <p class="w-full">
             <b class="font-nunitoMedium">Languages: </b>{{ languages }}
@@ -47,24 +48,26 @@
         </div>
         <div class="flex justify-between my-1">
           <p class="w-full">
-            <b class="font-nunitoMedium">Sub Region: </b>{{ data.subregion }}
+            <b class="font-nunitoMedium">Sub Region: </b
+            >{{ countryInfo.subregion }}
           </p>
         </div>
         <div class="flex justify-between my-1">
           <p class="w-full">
-            <b class="font-nunitoMedium">Capital: </b>{{ data.capital }}
+            <b class="font-nunitoMedium">Capital: </b>{{ countryInfo.capital }}
           </p>
         </div>
-        <div class="flex justify-between mt-12">
-          <p class="w-full">
+        <div v-show="borders.length !== 0" class="flex justify-between mt-12">
+          <p class="w-full [&>*:nth-child(2)]:ml-3">
             <b class="font-nunitoMedium">Border Countries: </b>
-            <button
-              class="bg-white font-bold py-2 px-4 mx-3 rounded"
-              v-for="(item, index) in data.borders"
+            <NuxtLink
+              :to="useGenerateLink(item)"
+              class="bg-white font-bold py-2 px-4 ml-0 my-3 mr-3 rounded"
+              v-for="(item, index) in borders"
               :key="index"
             >
-              {{ item }}
-            </button>
+              {{ item.name }}
+            </NuxtLink>
           </p>
         </div>
       </div>
@@ -74,21 +77,39 @@
 
 <script setup lang="ts">
 const route = useRoute();
-const data = route.query;
+const countryInfo = route.query;
+
+const api = useApi();
+
+const { data } = await api({
+  method: "GET",
+  url: "/country",
+});
 
 const topLevelDomain = computed(() => {
-  return data.topLevelDomain?.toString();
+  return countryInfo.topLevelDomain?.toString();
 });
 
 const currencies = computed(() => {
-  let parsedCurrencies = JSON.parse(data.currencies as string);
+  let parsedCurrencies = JSON.parse(countryInfo.currencies as string);
   parsedCurrencies = parsedCurrencies.map((item: any) => item.name);
   return parsedCurrencies.join();
 });
 
 const languages = computed<string>(() => {
-  let parsedLanguages = JSON.parse(data.languages as string);
+  let parsedLanguages = JSON.parse(countryInfo.languages as string);
   parsedLanguages = parsedLanguages.map((item: any) => item.name);
   return parsedLanguages.join();
+});
+
+const borders = computed(() => {
+  let parsedBorders = data.filter((item: any) =>
+    countryInfo.borders?.includes(item.alpha3Code)
+  );
+  // parsedBorders = parsedBorders.map((item: any) =>
+  //   item.name.includes("(") ? item.name.split(" ")[0] : item.name
+  // );
+
+  return parsedBorders;
 });
 </script>
