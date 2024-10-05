@@ -3,77 +3,53 @@
     <div class="flex my-10">
       <NuxtLink
         @click="$router.back()"
-        class="bg-white text-black font-bold py-2 px-8 rounded cursor-pointer hover:bg-gray-100 transition-all"
+        class="bg-white text-black font-bold mx-6 sm:mx-0 py-2 px-8 rounded cursor-pointer hover:bg-gray-100 transition-all"
       >
-        <font-awesome-icon
-          class="text-[#858585] mx-1"
-          icon="fa-solid fa-arrow-left"
-        />
-        Back</NuxtLink
-      >
+        <font-awesome-icon class="text-[#858585] mx-1" icon="fa-solid fa-arrow-left" />Back
+      </NuxtLink>
     </div>
-    <div class="flex gap-12">
+    <div class="flex flex-col sm:flex-row sm:gap-12">
       <div class="flex w-full">
         <img
-          class="w-full h-full"
+          class="w-[90%] m-auto sm:w-full sm:h-full"
           :src="`${countryInfo.flag}`"
           :alt="`${countryInfo.name}`"
         />
       </div>
       <div class="flex flex-col w-full p-6">
         <h2 class="font-nunitoExtraBold my-6">{{ countryInfo.name }}</h2>
-        <div class="flex justify-between my-1">
-          <p class="w-full">
-            <b class="font-nunitoMedium">Native Name: </b
-            >{{ countryInfo.nativeName }}
-          </p>
-          <p class="w-full">
-            <b class="font-nunitoMedium">Top Level Domain: </b
-            >{{ topLevelDomain }}
-          </p>
+        <div class="flex flex-col sm:flex-row gap-2 sm:gap-0">
+          <div class="flex flex-col w-full">
+            <p v-for="(item, index) in filteredCountryInfo" class="w-full my-1">
+              <b class="font-nunitoMedium">{{ `${index}:` }}</b>
+              {{ item }}
+            </p>
+          </div>
+          <div class="flex flex-col w-full">
+            <p class="w-full my-1">
+              <b class="font-nunitoMedium">Top Level Domain:</b>
+              {{ topLevelDomain }}
+            </p>
+            <p class="w-full my-1">
+              <b class="font-nunitoMedium">Currencies:</b>
+              {{ currencies }}
+            </p>
+            <p class="w-full my-1">
+              <b class="font-nunitoMedium">Languages:</b>
+              {{ languages }}
+            </p>
+          </div>
         </div>
-        <div class="flex justify-between my-1">
-          <p class="w-full">
-            <b class="font-nunitoMedium">Population: </b
-            >{{ countryInfo.population }}
-          </p>
-          <p class="w-full">
-            <b class="font-nunitoMedium">Currencies: </b>{{ currencies }}
-          </p>
-        </div>
-        <div class="flex justify-between my-1">
-          <p class="w-full">
-            <b class="font-nunitoMedium">Region: </b>{{ countryInfo.region }}
-          </p>
-          <p class="w-full">
-            <b class="font-nunitoMedium">Languages: </b>{{ languages }}
-          </p>
-        </div>
-        <div class="flex justify-between my-1">
-          <p class="w-full">
-            <b class="font-nunitoMedium">Sub Region: </b
-            >{{ countryInfo.subregion }}
-          </p>
-        </div>
-        <div class="flex justify-between my-1">
-          <p class="w-full">
-            <b class="font-nunitoMedium">Capital: </b>{{ countryInfo.capital }}
-          </p>
-        </div>
-        <div
-          v-show="borderCountries.length !== 0"
-          class="flex justify-between mt-12"
-        >
-          <p class="w-full [&>*:nth-child(2)]:ml-3">
-            <b class="font-nunitoMedium">Border Countries: </b>
+        <div v-show="borderCountries.length !== 0" class="flex justify-between mt-12">
+          <p class="w-full sm:[&>*:nth-child(3)]:ml-3">
+            <b class="font-nunitoMedium">Border Countries:</b>
+            <br class="sm:hidden" />
             <NuxtLink
               :to="useGenerateLink(item)"
               class="inline-flex bg-white font-bold py-2 px-4 ml-0 my-3 mr-3 rounded hover:bg-gray-100 transition-all"
               v-for="(item, index) in borderCountries"
               :key="index"
-            >
-              {{ item.name }}
-            </NuxtLink>
+            >{{ item.name }}</NuxtLink>
           </p>
         </div>
       </div>
@@ -86,6 +62,37 @@ const route = useRoute();
 const countryInfo = route.query;
 
 const data = await useCountryApi();
+
+const allowedKeys = [
+  "nativeName",
+  "population",
+  "region",
+  "subregion",
+  "capital"
+];
+
+const filteredCountryInfo = computed(() => {
+  return Object.keys(countryInfo)
+    .filter(key => allowedKeys.includes(key))
+    .reduce((o, k) => {
+      return {
+        ...o,
+        [k === "nativeName"
+          ? k.charAt(0).toUpperCase() +
+            k
+              .slice(1)
+              .split("eN")
+              .join("e N")
+          : k === "subregion"
+          ? k.charAt(0).toUpperCase() +
+            k
+              .slice(1)
+              .split("br")
+              .join("b R")
+          : k.charAt(0).toUpperCase() + k.slice(1)]: countryInfo[k]
+      };
+    }, {});
+});
 
 const topLevelDomain = computed(() => {
   return countryInfo.topLevelDomain?.toString();
@@ -106,7 +113,7 @@ const languages = computed<string>(() => {
 const abbrLongCountryNames = computed(() =>
   data.map(({ name, ...rest }: any) => ({
     ...rest,
-    name: name.includes("(") ? name.split(" ")[0] : name,
+    name: name.includes("(") ? name.split(" ")[0] : name
   }))
 );
 

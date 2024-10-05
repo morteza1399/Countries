@@ -37,7 +37,8 @@
         </ul>
       </div>
     </div>
-    <div class="flex flex-wrap sm:gap-[6.75rem] my-8">
+    <div class="flex flex-wrap sm:gap-[3.45rem] my-8">
+      <!-- [6.75rem] -->
       <NuxtLink
         :to="useGenerateLink(item)"
         class="bg-white rounded my-3 mx-auto sm:m-0"

@@ -1,5 +1,7 @@
 <template>
-  <div class="flex justify-between bg-white py-5 sm:px-20 px-2 border-b-2 border-[#fafafa]">
+  <div
+    class="flex justify-between items-center bg-white py-5 sm:px-20 px-2 border-b-2 border-[#fafafa] text-[12px]"
+  >
     <h2 class="font-nunitoExtraBold">Where in the world?</h2>
     <div>
       <button @click="toggleTheme()">
