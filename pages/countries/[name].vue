@@ -1,11 +1,13 @@
 <template>
-  <div>
+  <div class="text-white">
     <div class="flex my-10">
       <NuxtLink
         @click="$router.back()"
-        class="bg-white text-black font-bold mx-6 sm:mx-0 py-2 px-8 rounded cursor-pointer hover:bg-gray-100 transition-all"
+        class="font-bold mx-6 sm:mx-0 py-2 px-8 rounded cursor-pointer bg-[#2b3945] hover:bg-transparent transition-all"
       >
-        <font-awesome-icon class="text-[#858585] mx-1" icon="fa-solid fa-arrow-left" />Back
+        <!-- bg-white text-black hover:bg-gray-100 -->
+        <font-awesome-icon class="text-white mx-1" icon="fa-solid fa-arrow-left" />Back
+        <!-- text-[#858585] -->
       </NuxtLink>
     </div>
     <div class="flex flex-col sm:flex-row sm:gap-12">
@@ -46,10 +48,11 @@
             <br class="sm:hidden" />
             <NuxtLink
               :to="useGenerateLink(item)"
-              class="inline-flex bg-white font-bold py-2 px-4 ml-0 my-3 mr-3 rounded hover:bg-gray-100 transition-all"
+              class="inline-flex bg-[#2b3945] font-bold py-2 px-4 ml-0 my-3 mr-3 rounded hover:bg-transparent transition-all"
               v-for="(item, index) in borderCountries"
               :key="index"
             >{{ item.name }}</NuxtLink>
+            <!-- bg-white hover:bg-gray-100-->
           </p>
         </div>
       </div>

@@ -24,4 +24,6 @@
 
 h1, h2, h3 {
   font-size: revert;
+  /* color: #ffffff; */
+  /* color: #2b3945; */
 }
