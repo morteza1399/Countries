@@ -1,6 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  colorMode: {
+    preference: process.client ? localStorage.getItem("nuxt-color-mode") : "",
+  },
   app: {
     head: {
       charset: "utf-8",
@@ -8,10 +12,12 @@ export default defineNuxtConfig({
       title: "Countries",
     },
   },
+
   css: [
     "~/assets/css/style.css",
     "@fortawesome/fontawesome-svg-core/styles.css",
   ],
+
   build: {
     transpile: [
       "@fortawesome/fontawesome-svg-core",
@@ -21,10 +27,13 @@ export default defineNuxtConfig({
       "@fortawesome/vue-fontawesome",
     ],
   },
+  ssr: false,
   postcss: {
     plugins: {
       tailwindcss: {},
       autoprefixer: {},
     },
   },
+
+  modules: ["@nuxtjs/color-mode"],
 });
