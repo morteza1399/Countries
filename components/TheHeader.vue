@@ -2,13 +2,15 @@
   <div
     class="flex justify-between items-center dark:bg-[#2b3945] bg-white dark:text-white text-[#111517] py-5 sm:px-20 px-2 border-b-2 dark:border-[#202c37] border-[#fafafa] text-[12px]"
   >
-    <h2 class="font-nunitoExtraBold">Where in the world?</h2>
-    <div>
-      <button @click="toggleTheme()">
-        <font-awesome-icon class="mr-2" :icon="iconName" />
-        {{ colorMode.preference }} Mode
-      </button>
-    </div>
+    <ClientOnly>
+      <h2 class="font-nunitoExtraBold">Where in the world?</h2>
+      <div>
+        <button @click="toggleTheme()">
+          <font-awesome-icon class="mr-2" :icon="iconName" />
+          {{ colorMode.preference }} Mode
+        </button>
+      </div>
+    </ClientOnly>
   </div>
 </template>
 

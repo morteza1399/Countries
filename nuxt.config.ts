@@ -27,7 +27,6 @@ export default defineNuxtConfig({
       "@fortawesome/vue-fontawesome",
     ],
   },
-  ssr: false,
   postcss: {
     plugins: {
       tailwindcss: {},
